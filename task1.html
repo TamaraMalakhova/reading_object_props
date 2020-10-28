@@ -1,0 +1,39 @@
+<DOCTYPE Html>
+  <html>
+
+  <body>
+    <script>
+      const getObjectProperty = (obj, path, defaultValue) => {
+        const arrayOfKeys = path.split('.');
+        let result = obj;
+        for (let i = 0; i < arrayOfKeys.length; i++) {
+            result = (result[arrayOfKeys[i]]);
+            if(result === undefined){
+              return defaultValue;
+            }
+        }
+        if(typeof result === "object"){
+          result = JSON.stringify(result);
+        } 
+        return result;
+      }
+
+      const obj = {
+        'pupa': {
+          'lupa': {
+            'beep': 'boop',
+          },
+          'foo': 'bar',
+        },
+      };
+
+      alert(getObjectProperty(obj, "pupa.lupa")); // > { beep : 'boop' }
+      alert(getObjectProperty(obj, "pupa.lupa.beep")); // > 'boop'
+      alert(getObjectProperty(obj, "pupa.foo")); // > 'bar'
+      alert(getObjectProperty(obj, "pupa.ne.tuda")); // > undefined
+      alert(getObjectProperty(obj, "pupa.ne.tuda", true)); // > true
+      alert(getObjectProperty(obj, "pupa.ne.tuda", "Default value")); // > 'Default value'
+    </script>
+  </body>
+
+  </html>
